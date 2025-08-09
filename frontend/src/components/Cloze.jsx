@@ -1,18 +1,22 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
+import { BACKEND_URL } from "../constants/constants.js";
 
 function ClozeQuestion() {
   const [sentence, setSentence] = useState("");
   const [blankCount, setBlankCount] = useState(0);
   const [answers, setAnswers] = useState([]);
-  // answers - array of strings corresponding to each blank
-  // blankCount - number of blanks in the sentence
-  // sentence - string with "_"
+  // sentence - string
+  // blankCount - number
+  // answers - array of strings
 
-  useEffect(() => {
-    const count = (sentence.match(/_/g) || []).length;
+  const handleSentenceChange = (e) => {
+    const text = e.target.value;
+    setSentence(text);
+
+    const count = (text.match(/_/g) || []).length;
     setBlankCount(count);
-    setAnswers(Array(count).fill("")); // reset answers when sentence changes
-  }, [sentence]);
+    setAnswers(Array(count).fill(""));
+  };
 
   const handleAnswerChange = (index, value) => {
     const updatedAnswers = [...answers];
@@ -39,6 +43,48 @@ function ClozeQuestion() {
     return preview;
   };
 
+  const saveQuestion = async () => {
+    if (!sentence.trim()) {
+      alert("Please enter a sentence.");
+      return;
+    }
+    if (blankCount === 0) {
+      alert("Sentence must contain at least one '_' for a blank.");
+      return;
+    }
+    if (answers.some((a) => !a.trim())) {
+      alert("Please fill in all answers.");
+      return;
+    }
+    const questionData = {
+      type: "cloze",
+      data: {
+        sentence,
+        blankCount,
+        answers,
+      },
+    };
+    try {
+      const res = await fetch(`${BACKEND_URL}/api/questions`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(questionData),
+      });
+      if (!res.ok) {
+        const err = await res.json();
+        throw new Error(err.error || "Failed to save question");
+      }
+      const saved = await res.json();
+      alert("Question saved successfully!");
+      console.log("Saved question:", saved);
+      setSentence("");
+      setAnswers([]);
+      setBlankCount(0);
+    } catch (err) {
+      alert(`Error: ${err.message}`);
+    }
+  };
+
   return (
     <div className="max-w-xl w-full text-black mx-auto p-6 bg-[hsl(0,0%,85%)] rounded-xl shadow-md space-y-6">
       <h2 className="text-2xl font-semibold text-center">
@@ -54,7 +100,7 @@ function ClozeQuestion() {
           rows={3}
           className="w-full border rounded px-3 py-2 text-sm"
           value={sentence}
-          onChange={(e) => setSentence(e.target.value)}
+          onChange={handleSentenceChange}
           placeholder="Example: The capital of France is _ and the currency is _."
         />
         <p className="text-sm text-gray-500 mt-1">
@@ -92,6 +138,14 @@ function ClozeQuestion() {
           </div>
         </div>
       )}
+
+      {/* Save Button */}
+      <button
+        onClick={saveQuestion}
+        className="bg-purple-600 text-white px-6 py-2 rounded hover:bg-purple-700"
+      >
+        Save Question
+      </button>
     </div>
   );
 }

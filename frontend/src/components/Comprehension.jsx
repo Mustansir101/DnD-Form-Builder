@@ -1,12 +1,13 @@
 import React, { useState } from "react";
+import { BACKEND_URL } from "../constants/constants.js";
 
 function Comprehension() {
   const [passage, setPassage] = useState("");
   const [questions, setQuestions] = useState([
     { question: "", options: ["", "", "", ""], correctIndex: null },
   ]);
-  // passage - string containing the text passage
-  // questions - array of objects with question text, options, and correct answer index
+  // passage - string
+  // questions - array of objects
 
   const handleQuestionChange = (qIndex, value) => {
     const updated = [...questions];
@@ -35,6 +36,60 @@ function Comprehension() {
 
   const removeQuestion = (index) => {
     setQuestions(questions.filter((_, i) => i !== index));
+  };
+
+  const saveQuestion = async () => {
+    if (!passage.trim()) {
+      alert("Please enter a passage.");
+      return;
+    }
+    if (questions.length === 0) {
+      alert("Please add at least one question.");
+      return;
+    }
+    //for each qn
+    for (let i = 0; i < questions.length; i++) {
+      const q = questions[i];
+      if (!q.question.trim()) {
+        alert(`Question ${i + 1} is missing text.`);
+        return;
+      }
+      if (q.options.some((opt) => !opt.trim())) {
+        alert(`All options for question ${i + 1} must be filled.`);
+        return;
+      }
+      if (q.correctIndex === null || q.correctIndex < 0) {
+        alert(`Please select a correct answer for question ${i + 1}.`);
+        return;
+      }
+    }
+    const questionData = {
+      type: "comprehension",
+      data: {
+        passage,
+        questions,
+      },
+    };
+    try {
+      const res = await fetch(`${BACKEND_URL}/api/questions`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(questionData),
+      });
+      if (!res.ok) {
+        const err = await res.json();
+        throw new Error(err.error || "Failed to save question");
+      }
+      const saved = await res.json();
+      alert("Question saved successfully!");
+      console.log("Saved question:", saved);
+      setPassage("");
+      setQuestions([
+        { question: "", options: ["", "", "", ""], correctIndex: null },
+      ]);
+    } catch (err) {
+      alert(`Error: ${err.message}`);
+    }
   };
 
   return (
@@ -106,14 +161,14 @@ function Comprehension() {
 
         <button
           onClick={addQuestion}
-          className="mt-2 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 text-sm"
+          className="mt-2 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700 text-sm"
         >
           Add Another Question
         </button>
       </div>
 
       {/* Preview */}
-      {passage && (
+      {/* {passage && (
         <div>
           <h3 className="text-lg font-medium mb-2">Preview</h3>
           <div className="bg-gray-100 p-4 rounded space-y-4">
@@ -141,7 +196,15 @@ function Comprehension() {
             ))}
           </div>
         </div>
-      )}
+      )} */}
+
+      {/* Save Button */}
+      <button
+        onClick={saveQuestion}
+        className="bg-purple-600 text-white px-6 py-2 rounded hover:bg-purple-700"
+      >
+        Save Question
+      </button>
     </div>
   );
 }

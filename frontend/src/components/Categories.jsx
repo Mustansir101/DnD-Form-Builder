@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { BACKEND_URL } from "../constants/constants.js";
 
 function Categories() {
   const [categoryInput, setCategoryInput] = useState("");
@@ -8,6 +9,7 @@ function Categories() {
   const [selectedCategory, setSelectedCategory] = useState("");
   const [items, setItems] = useState([]);
   // items - { name: string, category: string }
+  // categories - array of strings
 
   const handleAddCategory = () => {
     if (categoryInput.trim() && !categories.includes(categoryInput)) {
@@ -30,6 +32,48 @@ function Categories() {
   const handleRemoveCategory = (cat) => {
     setCategories(categories.filter((c) => c !== cat));
     setItems(items.filter((item) => item.category !== cat));
+  };
+
+  const saveQuestion = async () => {
+    if (categories.length === 0) {
+      alert("Please add at least one category.");
+      return;
+    }
+    if (items.length === 0) {
+      alert("Please add at least one item.");
+      return;
+    }
+
+    const questionData = {
+      type: "categorize",
+      data: {
+        categories,
+        items,
+      },
+    };
+
+    try {
+      const res = await fetch(`${BACKEND_URL}/api/questions`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(questionData),
+      });
+
+      if (!res.ok) {
+        const err = await res.json();
+        throw new Error(err.error || "Failed to save question");
+      }
+
+      const saved = await res.json();
+      alert("Question saved successfully!");
+      console.log("Saved question:", saved);
+
+      // Reset state
+      setCategories([]);
+      setItems([]);
+    } catch (err) {
+      alert(`Error: ${err.message}`);
+    }
   };
 
   return (
@@ -123,7 +167,7 @@ function Categories() {
       </div>
 
       {/* Preview */}
-      <div>
+      {/* <div>
         <h3 className="text-lg font-medium mb-2">Preview</h3>
         <div className="space-y-4">
           {categories.map((cat, index) => (
@@ -139,7 +183,15 @@ function Categories() {
             </div>
           ))}
         </div>
-      </div>
+      </div> */}
+
+      {/* Save button */}
+      <button
+        onClick={saveQuestion}
+        className="bg-purple-600 text-white px-6 py-2 rounded hover:bg-purple-700"
+      >
+        Save Question
+      </button>
     </div>
   );
 }

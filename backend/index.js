@@ -1,25 +1,70 @@
-
-
-// Build REST API endpoints:
-// POST /api/forms - Create form
-// GET /api/forms - List forms
-// GET /api/forms/:id - Get specific form
-// PUT /api/forms/:id - Update form
-// POST /api/forms/:id/responses - Submit response
-// GET /api/forms/:id/responses - Get responses
-
-// server.js - minimal setup
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 dotenv.config();
 import mongoose from "mongoose";
+// Import Mongoose model
+import Question from "./models/Question.js";
 
 const app = express();
-app.use(express.json());
+
+// Middleware
 app.use(cors());
+app.use(express.json());
 
 // Connect to MongoDB
-mongoose.connect('mongodb://localhost:27017/formbuilder');
+const connectDB = async () => {
+  try {
+    await mongoose.connect(process.env.MONGO_URI);
+    console.log("MongoDB Connected");
+  } catch (err) {
+    console.error("Connection error:", err);
+    process.exit(1);
+  }
+};
+connectDB();
 
-app.listen(5000, () => console.log('Server running on 5000'));
+// POST /api/questions - Save a new question
+app.post("/api/questions", async (req, res) => {
+  try {
+    const newQuestion = new Question(req.body);
+    const savedQuestion = await newQuestion.save();
+    res.status(201).json(savedQuestion);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+});
+
+// GET /api/questions - Get all questions
+app.get("/api/questions", async (req, res) => {
+  try {
+    const questions = await Question.find().sort({ createdAt: -1 });
+    res.json(questions);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// GET /api/questions/:id - Get specific question
+app.get("/api/questions/:id", async (req, res) => {
+  try {
+    const question = await Question.findById(req.params.id);
+    if (!question) {
+      return res.status(404).json({ error: "Question not found" });
+    }
+    res.json(question);
+  } catch (error) {
+    res.status(400).json({ error: "Invalid question ID" });
+  }
+});
+
+// Health check endpoint
+app.get("/health", (req, res) => {
+  res.json({ status: "ok", message: "Server is healthy" });
+});
+
+// Start server
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
