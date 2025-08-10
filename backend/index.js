@@ -38,7 +38,7 @@ app.post("/api/questions", async (req, res) => {
 // GET /api/questions - Get all questions
 app.get("/api/questions", async (req, res) => {
   try {
-    const questions = await Question.find().sort({ createdAt: -1 });
+    const questions = await Question.find();
     res.json(questions);
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -58,9 +58,20 @@ app.get("/api/questions/:id", async (req, res) => {
   }
 });
 
-// Health check endpoint
+// Health check
 app.get("/health", (req, res) => {
   res.json({ status: "ok", message: "Server is healthy" });
+});
+
+// DELETE all questions
+app.delete("/api/questions", async (req, res) => {
+  try {
+    await Question.deleteMany({});
+    res.status(200).json({ message: "All questions deleted successfully" });
+  } catch (err) {
+    console.error("Error deleting questions:", err);
+    res.status(500).json({ error: "Failed to delete questions" });
+  }
 });
 
 // Start server

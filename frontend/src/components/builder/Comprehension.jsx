@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { BACKEND_URL } from "../constants/constants.js";
+import { BACKEND_URL } from "../../constants/constants.js";
 
 function Comprehension() {
   const [passage, setPassage] = useState("");
@@ -93,7 +93,7 @@ function Comprehension() {
   };
 
   return (
-    <div className="max-w-2xl mx-auto p-6 bg-[hsl(0,0%,85%)] text-black rounded-xl shadow-md space-y-6">
+    <div className="max-w-2xl w-full mx-auto p-6 bg-[hsl(0,0%,90%)] text-black rounded-xl shadow-md space-y-6">
       <h2 className="text-2xl font-semibold text-center">
         Comprehension Question Builder
       </h2>

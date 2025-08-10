@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { BACKEND_URL } from "../constants/constants.js";
+import { BACKEND_URL } from "../../constants/constants.js";
 
 function ClozeQuestion() {
   const [sentence, setSentence] = useState("");
@@ -86,7 +86,7 @@ function ClozeQuestion() {
   };
 
   return (
-    <div className="max-w-xl w-full text-black mx-auto p-6 bg-[hsl(0,0%,85%)] rounded-xl shadow-md space-y-6">
+    <div className="max-w-xl w-full text-black mx-auto p-6 bg-[hsl(0,0%,90%)] rounded-xl shadow-md space-y-6">
       <h2 className="text-2xl font-semibold text-center">
         Cloze Question Builder
       </h2>
