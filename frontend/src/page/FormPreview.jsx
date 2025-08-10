@@ -177,12 +177,12 @@ function FormPreview() {
             >
               Take Again
             </button>
-            <a
-              href="/Form-Builder"
-              className="bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700 inline-block"
+            <button
+              onClick={() => navigate("/")}
+              className="bg-gray-600 text-white px-4 py-2 mt-4 rounded"
             >
               Back to Builder
-            </a>
+            </button>
           </div>
         </div>
       </div>
