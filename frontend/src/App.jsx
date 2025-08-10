@@ -6,7 +6,7 @@ import FormBuilder from "./page/FormBuilder";
 
 function App() {
   return (
-    <Router>
+    <Router basename="/Form-Builder">
       <Routes>
         <Route path="/" element={<FormBuilder />} />
         <Route path="/preview" element={<FormPreview />} />
