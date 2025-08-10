@@ -130,12 +130,12 @@ function FormPreview() {
           <p className="text-gray-600 mb-4">
             There are no questions available to preview.
           </p>
-          <a
-            href="/"
-            className="bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700 inline-block"
+          <button
+            onClick={() => navigate("/")}
+            className="bg-amber-600 text-white px-4 py-2 mt-4 rounded"
           >
             Create Questions
-          </a>
+          </button>
         </div>
       </div>
     );
@@ -179,7 +179,7 @@ function FormPreview() {
             </button>
             <button
               onClick={() => navigate("/")}
-              className="bg-gray-600 text-white px-4 py-2 mt-4 rounded"
+              className="bg-amber-600 text-white px-4 py-2 mt-4 rounded"
             >
               Back to Builder
             </button>
