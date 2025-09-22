@@ -21,10 +21,6 @@ Perfect for creating quizzes, comprehension tests, and categorization exercises 
   - Automatically detects the number of blanks.
   - Select dropdowns appear in preview for each blank.
 
-  <p align="center">
-    <img src="image.png" alt="Cloze Question Preview" width="400"/>
-  </p>
-
 - 📖 **Comprehension Questions**
   - Add a reading passage.
   - Attach multiple-choice questions with selectable answers.
@@ -39,8 +35,8 @@ Perfect for creating quizzes, comprehension tests, and categorization exercises 
 - Fully interactive — test out answers right in the preview.
 
 <p align="center">
-  <img src="image-1.png" alt="Live Preview Example 1" width="450"/>
-  <img src="image-2.png" alt="Live Preview Example 2" width="450"/>
+  <img src="/assets/image-1.png" alt="Live Preview Example 1" width="450"/>
+  <img src="/assets/image-2.png" alt="Live Preview Example 2" width="450"/>
 </p>
 
 ---
