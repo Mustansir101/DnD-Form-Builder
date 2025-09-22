@@ -3,8 +3,6 @@
 An interactive **question form builder** with real-time preview capabilities, supporting multiple question types and a smooth user experience.  
 Perfect for creating quizzes, comprehension tests, and categorization exercises — then instantly previewing how users will see and interact with them.
 
----
-
 ## ✨ Features
 
 ### **1. Question Types**
@@ -21,6 +19,10 @@ Perfect for creating quizzes, comprehension tests, and categorization exercises 
   - Automatically detects the number of blanks.
   - Select dropdowns appear in preview for each blank.
 
+<p align="center">
+  <img src="image.png" alt="Cloze Question Preview" width="400" style="border-radius:8px; margin:10px 0;"/>
+</p>
+
 - **Comprehension Questions**
   - Add a reading passage.
   - Attach multiple-choice questions with selectable answers.
@@ -29,9 +31,14 @@ Perfect for creating quizzes, comprehension tests, and categorization exercises 
 
 ### **2. Live Preview**
 
-- See exactly how the final form will look for end-users.
+- See exactly how the final form will look for end-users with **`Drag and Drop Functionality`**
 - All question types rendered with a clean **white-themed** UI.
 - Fully interactive — test out answers right in the preview.
+
+<p align="center">
+  <img src="image-1.png" alt="Live Preview Example 1" width="400" style="border-radius:8px; margin:10px;"/>
+  <img src="image-2.png" alt="Live Preview Example 2" width="400" style="border-radius:8px; margin:10px;"/>
+</p>
 
 ---
 
