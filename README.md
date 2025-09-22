@@ -20,7 +20,7 @@ Perfect for creating quizzes, comprehension tests, and categorization exercises 
   - Select dropdowns appear in preview for each blank.
 
 <p align="center">
-  <img src="image.png" alt="Cloze Question Preview" width="400" style="border-radius:8px; margin:10px 0;"/>
+  <img src="/assets/image.png" alt="Cloze Question Preview" width="400" style="border-radius:15px; margin:10px 0;"/>
 </p>
 
 - **Comprehension Questions**
@@ -31,13 +31,13 @@ Perfect for creating quizzes, comprehension tests, and categorization exercises 
 
 ### **2. Live Preview**
 
-- See exactly how the final form will look for end-users with **`Drag and Drop Functionality`**
+- See exactly how the final form will look for end-users with <span style="background:#f1fa8c; color:#000; padding:2px 6px; border-radius:4px; font-weight:600;">Drag and Drop Functionality</span>
 - All question types rendered with a clean **white-themed** UI.
 - Fully interactive — test out answers right in the preview.
 
 <p align="center">
-  <img src="image-1.png" alt="Live Preview Example 1" width="400" style="border-radius:8px; margin:10px;"/>
-  <img src="image-2.png" alt="Live Preview Example 2" width="400" style="border-radius:8px; margin:10px;"/>
+  <img src="/assets/image-1.png" alt="Live Preview Example 1" width="450" style="border-radius:15px; margin:10px;"/>
+  <img src="/assets/image-2.png" alt="Live Preview Example 2" width="450" style="border-radius:15px; margin:10px;"/>
 </p>
 
 ---
